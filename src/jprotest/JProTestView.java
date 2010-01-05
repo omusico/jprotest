@@ -192,6 +192,7 @@ public class JProTestView extends FrameView {
         jPanel1.setName("jPanel1"); // NOI18N
 
         jButton1.setIcon(resourceMap.getIcon("jButton1.icon")); // NOI18N
+        jButton1.setEnabled(false);
         jButton1.setMargin(new java.awt.Insets(0, 0, 0, 0));
         jButton1.setName("jButton1"); // NOI18N
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -202,6 +203,7 @@ public class JProTestView extends FrameView {
 
         jButton2.setIcon(resourceMap.getIcon("jButton2.icon")); // NOI18N
         jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
+        jButton2.setEnabled(false);
         jButton2.setMargin(new java.awt.Insets(0, 0, 0, 0));
         jButton2.setName("jButton2"); // NOI18N
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -212,6 +214,7 @@ public class JProTestView extends FrameView {
 
         jButton3.setIcon(resourceMap.getIcon("jButton3.icon")); // NOI18N
         jButton3.setText(resourceMap.getString("jButton3.text")); // NOI18N
+        jButton3.setEnabled(false);
         jButton3.setMargin(new java.awt.Insets(0, 0, 0, 0));
         jButton3.setName("jButton3"); // NOI18N
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -341,6 +344,7 @@ public class JProTestView extends FrameView {
         fileMenu.add(jMenuNewAudio);
 
         jMenuItem3.setText(resourceMap.getString("jMenuItem3.text")); // NOI18N
+        jMenuItem3.setEnabled(false);
         jMenuItem3.setName("jMenuItem3"); // NOI18N
         fileMenu.add(jMenuItem3);
 
@@ -349,6 +353,7 @@ public class JProTestView extends FrameView {
 
         jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem1.setText(resourceMap.getString("jMenuItem1.text")); // NOI18N
+        jMenuItem1.setEnabled(false);
         jMenuItem1.setName("jMenuItem1"); // NOI18N
         fileMenu.add(jMenuItem1);
 
@@ -357,6 +362,7 @@ public class JProTestView extends FrameView {
 
         jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_W, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem2.setText(resourceMap.getString("jMenuItem2.text")); // NOI18N
+        jMenuItem2.setEnabled(false);
         jMenuItem2.setName("jMenuItem2"); // NOI18N
         fileMenu.add(jMenuItem2);
 
@@ -368,6 +374,7 @@ public class JProTestView extends FrameView {
         menuBar.add(fileMenu);
 
         jMenu1.setText(resourceMap.getString("jMenu1.text")); // NOI18N
+        jMenu1.setEnabled(false);
         jMenu1.setName("jMenu1"); // NOI18N
         jMenu1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -753,6 +760,14 @@ public class JProTestView extends FrameView {
             jPanel2.add(chartPanel, "top");
             jPanel2.revalidate();
             jPanel2.repaint();
+
+            jMenu1.setEnabled(true);
+            jMenuItem1.setEnabled(true);
+            jMenuItem2.setEnabled(true);
+            jMenuItem3.setEnabled(true);
+            jButton1.setEnabled(true);
+            jButton2.setEnabled(true);
+            jButton3.setEnabled(true);
 
         } catch (Exception e) {
             e.printStackTrace();
