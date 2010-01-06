@@ -123,6 +123,7 @@ public class Clip {
         this.name = name;
         this.frameSize = frameSize;
         this.overlap = overlap;
+        frames.clear();
         WindowFunction windowFunc = new VorbisWindowFunction(frameSize);
         byte[] buf = new byte[frameSize * 2]; // 16-bit mono samples
         int n;

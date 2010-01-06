@@ -355,6 +355,11 @@ public class JProTestView extends FrameView {
         jMenuItem1.setText(resourceMap.getString("jMenuItem1.text")); // NOI18N
         jMenuItem1.setEnabled(false);
         jMenuItem1.setName("jMenuItem1"); // NOI18N
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
         fileMenu.add(jMenuItem1);
 
         jSeparator2.setName("jSeparator2"); // NOI18N
@@ -740,6 +745,8 @@ public class JProTestView extends FrameView {
                 System.exit(0);
             }
             File wavFile = new File(dir, file);
+
+
             clip = Clip.newInstance(wavFile);
 
             initializeChartPanel();
@@ -846,6 +853,11 @@ public class JProTestView extends FrameView {
         chartPanel.setHorizontalAxisTrace(jCheckBox4.isSelected());
         chartPanel.repaint();
     }//GEN-LAST:event_jCheckBox4ActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        //chartPanel.createChartPrintJob();
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void chartPanelMouseMoved(org.jfree.chart.ChartMouseEvent mouseChartEvent) {
         // TODO add your handling code here:
@@ -970,7 +982,8 @@ public class JProTestView extends FrameView {
                 }
             }
         }
-        dataset = new XYSeriesCollection();
+
+        dataset.removeAllSeries();
         dataset.addSeries(xy);
 
         //XYSeriesCollection splineDataset = new XYSeriesCollection();
@@ -1215,6 +1228,6 @@ public class JProTestView extends FrameView {
     private int busyIconIndex = 0;
     private JDialog aboutBox;
     private ChartPanel chartPanel;
-    private XYSeriesCollection dataset;
+    private XYSeriesCollection dataset = new XYSeriesCollection();
     private Clip clip;
 }
