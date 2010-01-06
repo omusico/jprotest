@@ -42,46 +42,37 @@ import javax.swing.undo.UndoableEditSupport;
 public class Clip {
 
     private static final Logger logger = Logger.getLogger(Clip.class.getName());
-
     /**
      * The audio format this class works with. Input audio will be converted to this
      * format automatically, and output data will always be created in this format.
      */
     private static final AudioFormat AUDIO_FORMAT = new AudioFormat(44100, 16, 1, true, true);
-
     private static final int DEFAULT_FRAME_SIZE = 1024;
     private static final int DEFAULT_OVERLAP = 2;
-    
     private final List<Frame> frames = new ArrayList<Frame>();
-    
     /**
      * Number of samples per frame. Currently must be a power of 2 (this is a requirement
      * of many DFT routines).
      */
     private final int frameSize;
-    
     /**
      * The amount of overlap: this is the number of frames that will carry information
      * about the same sample. A value of 1 means no overlap; 2 means frames will overlap
      * to cover every sample twice, and so on.  More overlap means better time resolution.
      */
     private final int overlap;
-    
     /**
      * The amount that the time samples are divided by before sending to the transformation,
      * and the amount they're multiplied after being transformed back.
      */
     private double spectralScale = 10000.0;
-
     /**
      * Stores the current edit in progress, or null if there is no edit in progress.
      */
     private ClipDataEdit currentEdit;
-
     private final UndoableEditSupport undoEventSupport = new UndoableEditSupport();
-
     private final String name;
-    
+
     /**
      * Creates a new Clip based on the acoustical information in the given audio
      * file.
@@ -104,7 +95,7 @@ public class Clip {
         BufferedInputStream in = new BufferedInputStream(AudioFileUtils.readAsMono(desiredFormat, file));
         return new Clip(file.getAbsolutePath(), in, DEFAULT_FRAME_SIZE, DEFAULT_OVERLAP);
     }
-    
+
     /**
      * Creates a new clip from the audio data in the given input stream.
      * 
@@ -128,12 +119,12 @@ public class Clip {
         byte[] buf = new byte[frameSize * 2]; // 16-bit mono samples
         int n;
         in.mark(buf.length * 2);
-        while ( (n = readFully(in, buf)) != -1) {
-            logger.finest("Read "+n+" bytes");
+        while ((n = readFully(in, buf)) != -1) {
+            logger.finest("Read " + n + " bytes");
             if (n != buf.length) {
                 // this should only happen at the end of the input file (last frame)
-                logger.warning("Only read "+n+" of "+buf.length+" bytes at frame " + frames.size());
-                
+                logger.warning("Only read " + n + " of " + buf.length + " bytes at frame " + frames.size());
+
                 // pad with silence or there will be audible junk at end of clip
                 for (int i = n; i < buf.length; i++) {
                     buf[i] = 0;
@@ -141,25 +132,25 @@ public class Clip {
             }
             double[] samples = new double[frameSize];
             for (int i = 0; i < frameSize; i++) {
-                int hi = buf[2*i];// & 0xff; // need sign extension
-                int low = buf[2*i + 1] & 0xff;
-                int sampVal = ( (hi << 8) | low);
+                int hi = buf[2 * i];// & 0xff; // need sign extension
+                int low = buf[2 * i + 1] & 0xff;
+                int sampVal = ((hi << 8) | low);
                 samples[i] = (sampVal / spectralScale);
             }
-            
+
             frames.add(new Frame(samples, windowFunc));
             in.reset();
             long bytesToSkip = (frameSize * 2) / overlap;
             long bytesSkipped;
-            if ( (bytesSkipped = in.skip(bytesToSkip)) != bytesToSkip) {
+            if ((bytesSkipped = in.skip(bytesToSkip)) != bytesToSkip) {
                 logger.info("Skipped " + bytesSkipped + " bytes, but wanted " + bytesToSkip + " at frame " + frames.size());
             }
             in.mark(buf.length * 2);
         }
-        
+
         logger.info(String.format("Read %d frames from %s (%d bytes). frameSize=%d overlap=%d\n", frames.size(), name, frames.size() * buf.length, frameSize, overlap));
     }
-    
+
     /**
      * Fills the given buffer by reading the given input stream repeatedly
      * until the buffer is full. The only conditions that will prevent buf
@@ -175,7 +166,7 @@ public class Clip {
         int offset = 0;
         int length = buf.length;
         int bytesRead = 0;
-        while ( (offset < buf.length) && ((bytesRead = in.read(buf, offset, length)) != -1) ) {
+        while ((offset < buf.length) && ((bytesRead = in.read(buf, offset, length)) != -1)) {
             logger.finest("read " + bytesRead + " bytes at offset " + offset);
             length -= bytesRead;
             offset += bytesRead;
@@ -188,6 +179,7 @@ public class Clip {
             return -1;
         }
     }
+
     /**
      * Returns the number of time samples per frame.
      */
@@ -209,7 +201,7 @@ public class Clip {
     public int getFrameCount() {
         return frames.size();
     }
-    
+
     /**
      * Returns the <i>i</i>th frame.
      * 
@@ -238,7 +230,7 @@ public class Clip {
     public AudioInputStream getAudio() {
         return getAudio(0);
     }
-    
+
     public AudioInputStream getAudio(int sample) {
         return getAudio(sample, Integer.MAX_VALUE);
     }
@@ -261,38 +253,34 @@ public class Clip {
         // TODO prefill overlap buffer with previous frame's data
         // TODO calculate sample offset into the initial frame
         final int initialFrame = sample / getFrameTimeSamples();
-        
+
         InputStream audioData = new InputStream() {
 
             /**
              * Next frame to decode for playback.
              */
             int nextFrame = initialFrame;
-            
             /**
              * A data structure that holds all the current frames of floating point samples
              * and performs the overlap-and-combine operation for us.
              */
             OverlapBuffer overlapBuffer = new OverlapBuffer(frameSize, overlap);
-            
             /**
              * The current sample data. Only the lower 16 bits are significant.
              */
             int currentSample;
-            
             /**
              * Flag to indicate if the current byte being read from the input stream
              * is the high byte or the low byte of a single 16-bit sample.
              */
             boolean currentByteHigh = true;
-            
             int emptyFrameCount = 0;
 
             @Override
             public int available() throws IOException {
                 return Integer.MAX_VALUE;
             }
-            
+
             @Override
             public int read() throws IOException {
                 if (overlapBuffer.needsNewFrame()) {
@@ -304,7 +292,7 @@ public class Clip {
                         emptyFrameCount++;
                     }
                 }
-                
+
                 if (emptyFrameCount >= overlap) {
                     return -1;
                 } else if (currentByteHigh) {
@@ -315,9 +303,8 @@ public class Clip {
                     currentByteHigh = true;
                     return currentSample & 0xff;
                 }
-                
+
             }
-            
         };
         int clipLength = getFrameCount() * getFrameTimeSamples() * (AUDIO_FORMAT.getSampleSizeInBits() / 8) / overlap;
         return new AudioInputStream(audioData, AUDIO_FORMAT, Math.min(length, clipLength));
@@ -410,13 +397,10 @@ public class Clip {
     public void regionChanged(Rectangle region) {
         fireClipDataChangeEvent(region);
     }
-    
-
     // --------------------- ClipDataChangeEvent crap -------------------------
-    
     private final List<ClipDataChangeListener> clipDataChangeListeners =
-        new ArrayList<ClipDataChangeListener>();
-    
+            new ArrayList<ClipDataChangeListener>();
+
     public void addClipDataChangeListener(ClipDataChangeListener l) {
         clipDataChangeListeners.add(l);
     }
@@ -424,7 +408,7 @@ public class Clip {
     public void removeClipDataChangeListener(ClipDataChangeListener l) {
         clipDataChangeListeners.remove(l);
     }
-    
+
     private void fireClipDataChangeEvent(Rectangle region) {
         ClipDataChangeEvent e = new ClipDataChangeEvent(this, region);
         for (int i = clipDataChangeListeners.size() - 1; i >= 0; i--) {
@@ -432,9 +416,7 @@ public class Clip {
         }
     }
 
-    
     // -------------------- Undo event support ---------------------
-    
     public void addUndoableEditListener(UndoableEditListener l) {
         undoEventSupport.addUndoableEditListener(l);
     }
@@ -449,6 +431,12 @@ public class Clip {
 
     public double getSamplingRate() {
         return AUDIO_FORMAT.getSampleRate();
+    }
+
+    public String getFileName() {
+        String[] temp;
+        temp = name.split("\\\\");
+        return temp[temp.length - 1];
     }
 
     /**
@@ -488,11 +476,12 @@ public class Clip {
             throw err;
         } finally {
             try {
-                if (in != null) in.close();
+                if (in != null) {
+                    in.close();
+                }
             } catch (IOException ex) {
                 logger.log(Level.WARNING, "Failed to close input stream after creating subclip", ex);
             }
         }
     }
-
 }
