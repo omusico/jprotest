@@ -3,6 +3,7 @@
  */
 package jprotest;
 
+import com.jrefinery.chart.image.JPEG;
 import java.awt.CardLayout;
 import java.awt.Component;
 import java.awt.Container;
@@ -49,8 +50,8 @@ public class JProTestView extends FrameView {
         super(app);
 
         initComponents();
-        jFrame1.setSize(310, 410);
-        
+        jFrame1.setSize(320, 430);
+
         // status bar initialization - message timeout, idle icon and busy animation, etc
         ResourceMap resourceMap = getResourceMap();
         int messageTimeout = resourceMap.getInteger("StatusBar.messageTimeout");
@@ -147,6 +148,7 @@ public class JProTestView extends FrameView {
         jMenuItem3 = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
         jMenuItem2 = new javax.swing.JMenuItem();
         javax.swing.JMenuItem exitMenuItem = new javax.swing.JMenuItem();
@@ -183,6 +185,8 @@ public class JProTestView extends FrameView {
         jTextField2 = new javax.swing.JTextField();
         jButton5 = new javax.swing.JButton();
         jCheckBox4 = new javax.swing.JCheckBox();
+        jTextField9 = new javax.swing.JTextField();
+        jLabel14 = new javax.swing.JLabel();
 
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(jprotest.JProTestApp.class).getContext().getResourceMap(JProTestView.class);
         mainPanel.setBackground(resourceMap.getColor("mainPanel.background")); // NOI18N
@@ -332,6 +336,11 @@ public class JProTestView extends FrameView {
 
         fileMenu.setText(resourceMap.getString("fileMenu.text")); // NOI18N
         fileMenu.setName("fileMenu"); // NOI18N
+        fileMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fileMenuActionPerformed(evt);
+            }
+        });
 
         jMenuNewAudio.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
         jMenuNewAudio.setText(resourceMap.getString("jMenuNewAudio.text")); // NOI18N
@@ -361,6 +370,16 @@ public class JProTestView extends FrameView {
             }
         });
         fileMenu.add(jMenuItem1);
+
+        jMenuItem4.setText(resourceMap.getString("jMenuItem4.text")); // NOI18N
+        jMenuItem4.setEnabled(false);
+        jMenuItem4.setName("jMenuItem4"); // NOI18N
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        fileMenu.add(jMenuItem4);
 
         jSeparator2.setName("jSeparator2"); // NOI18N
         fileMenu.add(jSeparator2);
@@ -540,7 +559,7 @@ public class JProTestView extends FrameView {
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6)
                             .addComponent(jLabel9))))
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -623,8 +642,8 @@ public class JProTestView extends FrameView {
                     .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSlider2, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
-                    .addComponent(jSlider1, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE))
+                    .addComponent(jSlider2, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
+                    .addComponent(jSlider1, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -667,39 +686,68 @@ public class JProTestView extends FrameView {
             }
         });
 
+        jTextField9.setText(resourceMap.getString("jTextField9.text")); // NOI18N
+        jTextField9.setName("jTextField9"); // NOI18N
+        jTextField9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField9ActionPerformed(evt);
+            }
+        });
+        jTextField9.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextField9KeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField9KeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField9KeyTyped(evt);
+            }
+        });
+
+        jLabel14.setText(resourceMap.getString("jLabel14.text")); // NOI18N
+        jLabel14.setName("jLabel14"); // NOI18N
+
         javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
         jFrame1.getContentPane().setLayout(jFrame1Layout);
         jFrame1Layout.setHorizontalGroup(
             jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jFrame1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jFrame1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jCheckBox1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jCheckBox2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jCheckBox4)
+                        .addContainerGap())
                     .addGroup(jFrame1Layout.createSequentialGroup()
-                        .addGap(106, 106, 106)
-                        .addComponent(jButton5))
-                    .addGroup(jFrame1Layout.createSequentialGroup()
-                        .addContainerGap()
                         .addGroup(jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jFrame1Layout.createSequentialGroup()
-                                .addComponent(jCheckBox1)
+                                .addComponent(jLabel14)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jCheckBox2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jCheckBox4))
-                            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap())
+                                .addComponent(jTextField9, javax.swing.GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE))
+                            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(jFrame1Layout.createSequentialGroup()
+                                .addGap(96, 96, 96)
+                                .addComponent(jButton5))
+                            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap())))
         );
         jFrame1Layout.setVerticalGroup(
             jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jFrame1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel14))
+                .addGap(7, 7, 7)
+                .addGroup(jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jCheckBox1)
                     .addComponent(jCheckBox2)
                     .addComponent(jCheckBox4))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -740,13 +788,9 @@ public class JProTestView extends FrameView {
             fd.setVisible(true);
             String dir = fd.getDirectory();
             String file = fd.getFile();
-            if (dir == null || file == null) {
-                JOptionPane.showMessageDialog(f, "Ok, maybe next time");
-                System.exit(0);
-            }
+            if (dir == null || file == null) return;
+
             File wavFile = new File(dir, file);
-
-
             clip = Clip.newInstance(wavFile);
 
             initializeChartPanel();
@@ -771,7 +815,8 @@ public class JProTestView extends FrameView {
             jMenu1.setEnabled(true);
             jMenuItem1.setEnabled(true);
             jMenuItem2.setEnabled(true);
-            jMenuItem3.setEnabled(true);
+            //jMenuItem3.setEnabled(true);
+            jMenuItem4.setEnabled(true);
             jButton1.setEnabled(true);
             jButton2.setEnabled(true);
             jButton3.setEnabled(true);
@@ -834,12 +879,12 @@ public class JProTestView extends FrameView {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        chartPanel.zoomInBoth(2.0,2.0);
+        chartPanel.zoomInBoth(2.0, 2.0);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        chartPanel.zoomOutBoth(2.0,2.0);
+        chartPanel.zoomOutBoth(2.0, 2.0);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -858,6 +903,49 @@ public class JProTestView extends FrameView {
         // TODO add your handling code here:
         //chartPanel.createChartPrintJob();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void fileMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fileMenuActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fileMenuActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        // TODO add your handling code here:
+        final JFrame f = new JFrame("Dummy frame for owning dialogs");
+        try {
+            FileDialog fd = new FileDialog(f, "Save File");
+            fd.setVisible(true);
+            String dir = fd.getDirectory();
+            String file = fd.getFile();
+
+            JPEG jpg = new JPEG();
+            jpg.saveToFile(chartPanel.getChart(), dir + "/" + file, 800, 600, 95);
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(f,
+                    "Sorry, couldn't save chart to image:\n"
+                    + e.getMessage());
+        }
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jTextField9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField9ActionPerformed
+        // TODO add your handling code here:
+        chartPanel.getChart().setTitle(jTextField9.getText());
+    }//GEN-LAST:event_jTextField9ActionPerformed
+
+    private void jTextField9KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField9KeyTyped
+        // TODO add your handling code here:
+        chartPanel.getChart().setTitle(jTextField9.getText());
+    }//GEN-LAST:event_jTextField9KeyTyped
+
+    private void jTextField9KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField9KeyPressed
+        // TODO add your handling code here:
+        chartPanel.getChart().setTitle(jTextField9.getText());
+    }//GEN-LAST:event_jTextField9KeyPressed
+
+    private void jTextField9KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField9KeyReleased
+        // TODO add your handling code here:
+        chartPanel.getChart().setTitle(jTextField9.getText());
+    }//GEN-LAST:event_jTextField9KeyReleased
 
     private void chartPanelMouseMoved(org.jfree.chart.ChartMouseEvent mouseChartEvent) {
         // TODO add your handling code here:
@@ -991,7 +1079,7 @@ public class JProTestView extends FrameView {
 
         JFreeChart chart = ChartFactory.createXYLineChart(
                 //JFreeChart chart = ChartFactory.createScatterPlot(
-                null, "Time (ms)", "Frequency (Hz)", dataset, PlotOrientation.VERTICAL, true, true, false);
+                clip.getFileName(), "Time (ms)", "Frequency (Hz)", dataset, PlotOrientation.VERTICAL, true, true, false);
         XYPlot xyplot = (XYPlot) chart.getPlot();
         xyplot.setRenderer(new XYSplineRenderer());
         XYLineAndShapeRenderer xylineandshaperenderer = (XYLineAndShapeRenderer) xyplot.getRenderer();
@@ -1015,23 +1103,23 @@ public class JProTestView extends FrameView {
         jSlider1.setEnabled(true);
         jSlider2.setEnabled(true);
 
+        jTextField9.setText(clip.getFileName());
+
         chartPanel = new ChartPanel(chart);
     }
 
-
     /**
-    * Calibrates data.
-    *
-    * @return An integer.
-    */
+     * Calibrates data.
+     *
+     * @return An integer.
+     */
     private double calibrate(double val) {
         double retval = val;
-        if (jCheckBox3.isSelected()){
-           retval = ( Double.parseDouble(jTextField5.getText()) / (Double.parseDouble(jTextField6.getText()) - Double.parseDouble(jTextField4.getText())) ) * (val - Double.parseDouble(jTextField4.getText()));
+        if (jCheckBox3.isSelected()) {
+            retval = (Double.parseDouble(jTextField5.getText()) / (Double.parseDouble(jTextField6.getText()) - Double.parseDouble(jTextField4.getText()))) * (val - Double.parseDouble(jTextField4.getText()));
         }
         return retval;
     }
-
 
     /**
      * Creates an internal panel.
@@ -1137,18 +1225,17 @@ public class JProTestView extends FrameView {
         xylineandshaperenderer.setSeriesShapesVisible(0, jCheckBox1.isSelected());
         xylineandshaperenderer.setSeriesLinesVisible(1, jCheckBox2.isSelected());
 
-        if (jCheckBox3.isSelected()){
-           xyplot.getRangeAxis().setLabel(jTextField8.getText()+" ("+jTextField3.getText()+")");
+        if (jCheckBox3.isSelected()) {
+            xyplot.getRangeAxis().setLabel(jTextField8.getText() + " (" + jTextField3.getText() + ")");
         } else {
-           xyplot.getRangeAxis().setLabel("Frequency (Hz)");
+            xyplot.getRangeAxis().setLabel("Frequency (Hz)");
         }
 
         // Show Crosshairs
-                chartPanel.setVerticalAxisTrace(true);
+        chartPanel.setVerticalAxisTrace(true);
 
         chartPanel.repaint();
     }
-
 
     /**
      * Creates an internal frame.
@@ -1184,6 +1271,7 @@ public class JProTestView extends FrameView {
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -1196,6 +1284,7 @@ public class JProTestView extends FrameView {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuNewAudio;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -1213,6 +1302,7 @@ public class JProTestView extends FrameView {
     private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
+    private javax.swing.JTextField jTextField9;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JProgressBar progressBar;
