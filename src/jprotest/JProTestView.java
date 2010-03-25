@@ -901,7 +901,7 @@ public class JProTestView extends FrameView {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
-        //chartPanel.createChartPrintJob();
+        chartPanel.createChartPrintJob();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void fileMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fileMenuActionPerformed
